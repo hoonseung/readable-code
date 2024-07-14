@@ -1,24 +1,34 @@
 package cleancode.studycafe.tobe.model;
 
-import cleancode.studycafe.mytobe.model.StudyCafePassType;
+
 
 public class StudyCafeLockerPass {
 
-    private final cleancode.studycafe.mytobe.model.StudyCafePassType passType;
+    private final StudyCafePassType passType;
     private final int duration;
     private final int price;
 
-    private StudyCafeLockerPass(cleancode.studycafe.mytobe.model.StudyCafePassType passType, int duration, int price) {
+    private StudyCafeLockerPass(StudyCafePassType passType, int duration, int price) {
         this.passType = passType;
         this.duration = duration;
         this.price = price;
     }
 
-    public static StudyCafeLockerPass of(cleancode.studycafe.mytobe.model.StudyCafePassType passType, int duration, int price) {
+    public static StudyCafeLockerPass of(StudyCafePassType passType, int duration, int price) {
         return new StudyCafeLockerPass(passType, duration, price);
     }
 
-    public cleancode.studycafe.mytobe.model.StudyCafePassType getPassType() {
+
+    public boolean isSameType(StudyCafePassType passType) {
+        return this.passType == passType;
+    }
+
+
+    public boolean isSameDuration(int duration) {
+        return this.duration == duration;
+    }
+
+    public StudyCafePassType getPassType() {
         return passType;
     }
 
@@ -31,10 +41,10 @@ public class StudyCafeLockerPass {
     }
 
     public String display() {
-        if (passType == cleancode.studycafe.mytobe.model.StudyCafePassType.HOURLY) {
+        if (passType == StudyCafePassType.HOURLY) {
             return String.format("%s시간권 - %d원", duration, price);
         }
-        if (passType == cleancode.studycafe.mytobe.model.StudyCafePassType.WEEKLY) {
+        if (passType == StudyCafePassType.WEEKLY) {
             return String.format("%s주권 - %d원", duration, price);
         }
         if (passType == StudyCafePassType.FIXED) {
@@ -42,5 +52,6 @@ public class StudyCafeLockerPass {
         }
         return "";
     }
+
 
 }
