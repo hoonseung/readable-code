@@ -47,27 +47,26 @@ public class StudyCafePassMachine {
     }
 
 
-    private List<StudyCafePass> findPassCandidatesBy(StudyCafePassType studyCafePassType) {
+    private List<StudyCafePass> findPassCandidatesBy(StudyCafePassType passType) {
         List<StudyCafePass> allPasses = studyCafeFileHandler.readStudyCafePasses();
         return allPasses.stream()
-                .filter(studyCafePass -> studyCafePass.getPassType() == studyCafePassType)
+                .filter(studyCafePass -> studyCafePass.isSamePassType(passType))
                 .toList();
     }
 
 
     private Optional<StudyCafeLockerPass> selectLockerPass(StudyCafePass selectedPass) {
-        if (selectedPass.getPassType() != StudyCafePassType.FIXED) {
-            return Optional.empty();
-        }
-        StudyCafeLockerPass lockerPassCandidate = findLockerPassCandidatesBy(selectedPass);
-        if (lockerPassCandidate != null) {
-            outputHandler.askLockerPass(lockerPassCandidate);
-            boolean isLockerSelected = inputHandler.getLockerSelection();
+        if(selectedPass.isEnableLocker()) {
+            StudyCafeLockerPass lockerPassCandidate = findLockerPassCandidatesBy(selectedPass);
+            if (lockerPassCandidate != null) {
+                outputHandler.askLockerPass(lockerPassCandidate);
+                boolean isLockerSelected = inputHandler.getLockerSelection();
 
-            if (isLockerSelected) {
-                return Optional.of(lockerPassCandidate);
+                if (isLockerSelected) {
+                    return Optional.of(lockerPassCandidate);
+                }
+
             }
-
         }
         return Optional.empty();
     }
@@ -76,10 +75,7 @@ public class StudyCafePassMachine {
     private StudyCafeLockerPass findLockerPassCandidatesBy(StudyCafePass pass) {
         List<StudyCafeLockerPass> allLockerPasses = studyCafeFileHandler.readLockerPasses();
         return allLockerPasses.stream()
-                .filter(lockerPass ->
-                        lockerPass.getPassType() == pass.getPassType()
-                                && lockerPass.getDuration() == pass.getDuration()
-                )
+                .filter(pass::isSameDurationType)
                 .findFirst()
                 .orElse(null);
     }
