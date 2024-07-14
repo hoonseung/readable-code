@@ -1,8 +1,8 @@
 package cleancode.studycafe.tobe.io;
 
-import cleancode.studycafe.tobe.model.StudyCafeLockerPass;
-import cleancode.studycafe.tobe.model.StudyCafePass;
-import cleancode.studycafe.tobe.model.StudyCafePassType;
+import cleancode.studycafe.mytobe.model.StudyCafeLockerPass;
+import cleancode.studycafe.mytobe.model.StudyCafePass;
+import cleancode.studycafe.mytobe.model.StudyCafePassType;
 
 import java.io.IOException;
 import java.nio.file.Files;

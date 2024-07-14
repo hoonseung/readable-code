@@ -1,5 +1,7 @@
 package cleancode.studycafe.tobe;
 
+import cleancode.studycafe.mytobe.StudyCafePassMachine;
+
 public class StudyCafeApplication {
 
     public static void main(String[] args) {
